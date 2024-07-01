@@ -16,7 +16,7 @@ function sendPosition(position) {
     locationElement.textContent = `Latitud: ${latitude}, Longitud: ${longitude}`;
 
     // Enviar la ubicación al servidor
-    fetch('https://stream-hypnotic-cloak.glitch.me/location', {
+    fetch('https://gray-truthful-legume.glitch.me/location', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
