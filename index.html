@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Información</title>
+</head>
+<body>
+    <h1>Formulario de Envío de Información</h1>
+    <form id="infoForm">
+        <label for="infoInput">Ingrese su información:</label>
+        <input type="text" id="infoInput" name="infoInput" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById('infoForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene el comportamiento por defecto del formulario
+
+            const inputData = document.getElementById('infoInput').value;
+
+            fetch('https://gray-truthful-legume.glitch.me/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: inputData })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+            })
+            .catch(error => {
+                console.error('Error al enviar la información:', error);
+            });
+        });
+    </script>
+</body>
+</html>
