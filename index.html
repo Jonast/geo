@@ -3,12 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obtener Ubicación Geográfica</title>
+    <title>Enviar Ubicación</title>
+    <script>
+        function sendLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // Enviar los datos de ubicación al servidor
+                    fetch('http://localhost:3000/location', { // Asegúrate de que la URL del servidor es correcta
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ latitude, longitude })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Ubicación enviada:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error al enviar la ubicación:', error);
+                    });
+                }, function(error) {
+                    console.error('Error al obtener la ubicación:', error);
+                });
+            } else {
+                console.error('Geolocalización no soportada por el navegador');
+            }
+        }
+    </script>
 </head>
 <body>
-    <a href="#" id="getLocation">Haz clic aquí para ver tus beneficios</a>
-    <p id="location"></p>
-
-    <script src="app.js"></script>
+    <h1>Enviar Ubicación</h1>
+    <a href="#" onclick="sendLocation(); return false;">Enviar mi ubicación</a>
 </body>
 </html>
